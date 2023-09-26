@@ -47,7 +47,12 @@ public class BlogController {
 		//path variable 정규 표현식 assets 으로 시작하지 않는 것으로
 		
 		BlogVo blogVo = blogService.findById(blogId);
+		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
+		List<PostVo> postList = postService.getAllContents(blogId);
+		
 		model.addAttribute("vo", blogVo);
+		model.addAttribute("categoryList",categoryList);
+		model.addAttribute("postList",postList);
 		
 		return "blog/main";
 	}
@@ -126,7 +131,6 @@ public class BlogController {
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String write(@PathVariable("id") String blogId, PostVo postVo) {
-//		System.out.println(postVo);
 		
 		postService.addPost(postVo);
 		

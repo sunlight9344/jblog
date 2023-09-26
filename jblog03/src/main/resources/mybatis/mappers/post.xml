@@ -9,4 +9,14 @@
 		]]>
 	</insert>
 	
+	<select id="findAll" resultType="postvo" parameterType="String">
+		<![CDATA[
+			select c.no, c.title, c.contents, c.category_no as categoryNo
+			from blog a, category b, post c
+			where a.blog_id = b.blog_id
+			and  b.no = c.category_no
+			and a.blog_id = #{blogId}
+		]]>
+	</select>
+	
 </mapper>

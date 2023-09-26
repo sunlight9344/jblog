@@ -1,5 +1,7 @@
 package com.poscodx.jblog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class PostService {
 	
 	public void addPost(PostVo postVo) {
 		postRepository.insert(postVo);
+	}
+
+	public List<PostVo> getAllContents(String blogId) {
+		return postRepository.findAll(blogId);
 	}
 
 }
