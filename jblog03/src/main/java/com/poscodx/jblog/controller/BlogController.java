@@ -1,5 +1,6 @@
 package com.poscodx.jblog.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +44,6 @@ public class BlogController {
 			@PathVariable("categoryNo") Optional<Long> categoryNoTemp,
 			@PathVariable("postNo") Optional<Long> postNo,
 			Model model) {
-		
-		//PathVariable 을 optional 사용해서 null 값을 받을 수 있 또 로로로록
-		//asset 이라고 쳤을 때도 들어옴 정적인것도 들어온다 asset 들어오는데 어? blog 아이디인데? 하고 들어온다고 ---> pathVariable 정규 표현식으로 해결 가능 또는 asset 을 그냥 가상 url 로 따두면 되잖아
-		//path variable 정규 표현식 assets 으로 시작하지 않는 것으로
 		
 		Map<String, Object> map = new HashMap<>();
 		BlogVo blogVo = blogService.findById(blogId);
@@ -114,11 +111,12 @@ public class BlogController {
 		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
-		
-		for(CategoryVo vo:list) {
-			System.out.println(vo);
+		model.addAttribute("blogId", blogId);
+		List<Integer> countList = new ArrayList<>();
+		for(CategoryVo vo : list) {
+			countList.add(postService.count(vo.getNo()));
 		}
-		
+		model.addAttribute("countList", countList);
 		return "blog/admin-category";
 	}
 	
@@ -149,6 +147,7 @@ public class BlogController {
 			Model model) {
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
+		model.addAttribute("blogId", blogId);
 		return "blog/admin-write";
 	}
 	

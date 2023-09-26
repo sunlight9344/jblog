@@ -25,5 +25,11 @@
 			select no, title, contents, category_no as categoryNo from post where no=#{no};
 		]]>
 	</select>
+		
+	<select id="count" resultType="int" parameterType="int">
+		<![CDATA[
+			select count(*) from post where category_no=#{no};
+		]]>
+	</select>
 	
 </mapper>

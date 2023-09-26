@@ -26,4 +26,8 @@ public class PostService {
 		return postRepository.findByNo(postNo);
 	}
 
+	public Integer count(int no) {
+		return postRepository.count(no);
+	}
+
 }

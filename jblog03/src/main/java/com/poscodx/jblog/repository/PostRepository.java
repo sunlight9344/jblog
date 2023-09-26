@@ -31,4 +31,8 @@ public class PostRepository {
 		return sqlSession.selectOne("post.findByNo", postNo);
 	}
 
+	public Integer count(int no) {
+		return sqlSession.selectOne("post.count", no);
+	}
+
 }

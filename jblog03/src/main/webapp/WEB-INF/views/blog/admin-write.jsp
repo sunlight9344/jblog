@@ -21,8 +21,7 @@
 					<c:otherwise>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그
-								관리</a></li>
+							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그 관리</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -30,8 +29,8 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">기본설정</a></li>
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/category">카테고리</a></li>
+					<li><a href="${pageContext.request.contextPath}/${blogId }/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/${blogId }/admin/category">카테고리</a></li>
 					<li class="selected">글작성</li>
 				</ul>
 				<form action="${pageContext.request.contextPath}/${authUser.id }/admin/write" method="post">

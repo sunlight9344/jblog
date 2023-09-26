@@ -20,8 +20,7 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그 관리</a></li>
+						<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그 관리</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -29,9 +28,9 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/${blogId }/admin/basic">기본설정</a></li>
 					<li class="selected">카테고리</li>
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/write">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/${blogId }/admin/write">글작성</a></li>
 				</ul>
 		      	<table class="admin-cat">
 		      		
@@ -39,7 +38,7 @@
 						<tr>
 							<td>${status.index+1 }</td>
 							<td>${vo.name }</td>
-							<td>777</td>
+							<td>${countList[status.index] }</td>
 							<td>${vo.description }</td>
 							<td>
 								<a href="${pageContext.request.contextPath}/${authUser.id }/admin/delete/${vo.no }">

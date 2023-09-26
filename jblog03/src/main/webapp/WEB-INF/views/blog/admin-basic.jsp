@@ -20,9 +20,7 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그
-								관리</a></li>
+						<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그 관리</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -31,8 +29,8 @@
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
 					<li class="selected">기본설정</li>
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/category">카테고리</a></li>
-					<li><a href="${pageContext.request.contextPath}/${authUser.id }/admin/write">글작성</a></li>
+					<li><a href="${pageContext.request.contextPath}/${vo.blogId }/admin/category">카테고리</a></li>
+					<li><a href="${pageContext.request.contextPath}/${vo.blogId }/admin/write">글작성</a></li>
 				</ul>
 				<form action="${pageContext.request.contextPath}/${vo.blogId }/admin/basic" method="post" enctype="multipart/form-data">
 					<input type="hidden" name=image value="${vo.image }" />
