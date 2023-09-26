@@ -1,5 +1,6 @@
 package com.poscodx.jblog.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.poscodx.jblog.service.BlogService;
+import com.poscodx.jblog.service.CategoryService;
 import com.poscodx.jblog.service.FileUploadService;
 import com.poscodx.jblog.vo.BlogVo;
+import com.poscodx.jblog.vo.CategoryVo;
 
 @Controller
 @RequestMapping(value = "/{id:^(?!assets).*}")
@@ -20,6 +23,9 @@ public class BlogController {
 	
 	@Autowired
 	BlogService blogService;
+	
+	@Autowired
+	CategoryService categoryService;
 	
 	@Autowired
 	private FileUploadService fileUploadService;
@@ -42,7 +48,9 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
-	public String adminBasic(@PathVariable("id") String blogId, Model model) {
+	public String adminBasic(
+			@PathVariable("id") String blogId, 
+			Model model) {
 		
 		BlogVo blogVo = blogService.findById(blogId);
 		model.addAttribute("vo", blogVo);
@@ -51,7 +59,10 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
-	public String adminBasic(BlogVo blogVo, MultipartFile file, @PathVariable("id") String blogId) {
+	public String adminBasic(
+			@PathVariable("id") String blogId,
+			BlogVo blogVo, 
+			MultipartFile file) {
 		
 		blogVo.setBlogId(blogId);
 		String image = fileUploadService.restore(file);
@@ -61,6 +72,21 @@ public class BlogController {
 		blogService.update(blogVo);
 		
 		return "redirect:/" + blogId;
+	}
+	
+	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
+	public String adminCategory(
+			@PathVariable("id") String blogId,
+			Model model) {
+		
+		List<CategoryVo> list = categoryService.getAllContents(blogId);
+		model.addAttribute("list", list);
+		
+		for(CategoryVo vo:list) {
+			System.out.println(vo);
+		}
+		
+		return "blog/admin-category";
 	}
 	
 }
