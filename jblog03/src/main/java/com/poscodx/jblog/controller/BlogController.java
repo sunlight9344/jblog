@@ -14,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.poscodx.jblog.service.BlogService;
 import com.poscodx.jblog.service.CategoryService;
 import com.poscodx.jblog.service.FileUploadService;
+import com.poscodx.jblog.service.PostService;
 import com.poscodx.jblog.vo.BlogVo;
 import com.poscodx.jblog.vo.CategoryVo;
+import com.poscodx.jblog.vo.PostVo;
 
 @Controller
 @RequestMapping(value = "/{id:^(?!assets).*}")
@@ -23,6 +25,9 @@ public class BlogController {
 	
 	@Autowired
 	BlogService blogService;
+	
+	@Autowired
+	PostService postService;
 	
 	@Autowired
 	CategoryService categoryService;
@@ -110,4 +115,21 @@ public class BlogController {
 		return "redirect:/" + blogId + "/admin/category";
 	}
 	
+	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
+	public String write(
+			@PathVariable("id") String blogId, 
+			Model model) {
+		List<CategoryVo> list = categoryService.getAllContents(blogId);
+		model.addAttribute("list", list);
+		return "blog/admin-write";
+	}
+	
+	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
+	public String write(@PathVariable("id") String blogId, PostVo postVo) {
+//		System.out.println(postVo);
+		
+		postService.addPost(postVo);
+		
+		return "redirect:/" + blogId;
+	}
 }

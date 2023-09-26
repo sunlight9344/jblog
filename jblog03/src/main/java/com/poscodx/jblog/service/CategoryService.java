@@ -26,5 +26,4 @@ public class CategoryService {
 		categoryRepository.insert(categoryVo);
 	}
 	
-	
 }
