@@ -11,7 +11,22 @@
 </head>
 <body>
 	<div id="container">
-		<c:import url ="/WEB-INF/views/includes/header.jsp" />
+		<div id="header">
+			<h1>${vo.title }</h1>
+			<ul>
+				<c:choose>
+					<c:when test="${empty authUser }">
+						<li><a href="${pageContext.request.contextPath}/user/login">로그인</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+						<li><a
+							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그
+								관리</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+		</div>
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
@@ -43,7 +58,11 @@
 				</form>
 			</div>
 		</div>
-		<c:import url ="/WEB-INF/views/includes/footer.jsp" />
+		<div id="footer">
+			<p>
+				<strong>${vo.title }</strong> is powered by JBlog (c)2016
+			</p>
+		</div>
 	</div>
 </body>
 </html>
