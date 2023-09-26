@@ -1,6 +1,8 @@
 package com.poscodx.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class BlogController {
 	@RequestMapping({"", "/{categoryNo}", "/{categoryNo}/{postNo}"})
 	public String index(
 			@PathVariable("id") String blogId,
-			@PathVariable("categoryNo") Optional<Long> categoryNo,
+			@PathVariable("categoryNo") Optional<Long> categoryNoTemp,
 			@PathVariable("postNo") Optional<Long> postNo,
 			Model model) {
 		
@@ -46,13 +48,34 @@ public class BlogController {
 		//asset 이라고 쳤을 때도 들어옴 정적인것도 들어온다 asset 들어오는데 어? blog 아이디인데? 하고 들어온다고 ---> pathVariable 정규 표현식으로 해결 가능 또는 asset 을 그냥 가상 url 로 따두면 되잖아
 		//path variable 정규 표현식 assets 으로 시작하지 않는 것으로
 		
+		Map<String, Object> map = new HashMap<>();
 		BlogVo blogVo = blogService.findById(blogId);
 		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
-		List<PostVo> postList = postService.getAllContents(blogId);
 		
-		model.addAttribute("vo", blogVo);
-		model.addAttribute("categoryList",categoryList);
-		model.addAttribute("postList",postList);
+		PostVo postVo = null;
+		long categoryNo = 2;
+		
+		if(categoryNoTemp.isPresent()) {
+			categoryNo = categoryNoTemp.get();
+		}
+		
+		List<PostVo> postList = postService.getAllContents(blogId, categoryNo);
+		
+		if(postNo.isPresent()) {
+			postVo = postService.getPostByNo(postNo.get());
+		}else {
+			if(!postList.isEmpty()) {
+				postVo = postList.get(0);
+			}
+		}
+		
+		map.put("postVo", postVo);
+		map.put("vo", blogVo);
+		map.put("blogId", blogId);
+		map.put("categoryList", categoryList);
+		map.put("postList", postList);
+		
+		model.addAllAttributes(map);
 		
 		return "blog/main";
 	}

@@ -18,8 +18,12 @@ public class PostService {
 		postRepository.insert(postVo);
 	}
 
-	public List<PostVo> getAllContents(String blogId) {
-		return postRepository.findAll(blogId);
+	public List<PostVo> getAllContents(String blogId, long categoryNo) {
+		return postRepository.findAll(blogId, categoryNo);
+	}
+
+	public PostVo getPostByNo(Long postNo) {
+		return postRepository.findByNo(postNo);
 	}
 
 }
