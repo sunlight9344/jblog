@@ -15,7 +15,15 @@ public class CategoryRepository {
 	SqlSession sqlSession;
 
 	public List<CategoryVo> selectAll(String blogId) {
-		return sqlSession.selectList("category.selectAll",blogId);
+		return sqlSession.selectList("category.selectAll", blogId);
+	}
+
+	public void delete(int no) {
+		sqlSession.delete("category.deleteByNo", no);
+	}
+
+	public void insert(CategoryVo categoryVo) {
+		sqlSession.insert("category.insert", categoryVo);
 	}
 
 }
