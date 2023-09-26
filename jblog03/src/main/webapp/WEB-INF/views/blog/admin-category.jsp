@@ -21,8 +21,7 @@
 					<c:otherwise>
 						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
 						<li><a
-							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그
-								관리</a></li>
+							href="${pageContext.request.contextPath}/${authUser.id }/admin/basic">블로그 관리</a></li>
 					</c:otherwise>
 				</c:choose>
 			</ul>
@@ -42,7 +41,11 @@
 							<td>${vo.name }</td>
 							<td>777</td>
 							<td>${vo.description }</td>
-							<td><img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></td>
+							<td>
+								<a href="${pageContext.request.contextPath}/${authUser.id }/admin/delete/${vo.no }">
+									<img src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+								</a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -55,13 +58,13 @@
 		      		</tr>
 		      		<tr>
 		      			<td class="t">설명</td>
-		      			<td><input type="text" name="desc"></td>
+		      			<td><input type="text" name="description"></td>
 		      		</tr>
 		      		<tr>
 		      			<td class="s">&nbsp;</td>
 		      			<td><input type="submit" value="카테고리 추가"></td>
 		      		</tr>      		      		
-		      	</table> 
+		      	</table>
 			</div>
 		</div>
 		<div id="footer">

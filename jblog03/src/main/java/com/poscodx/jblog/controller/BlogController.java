@@ -89,4 +89,12 @@ public class BlogController {
 		return "blog/admin-category";
 	}
 	
+	@RequestMapping(value="/admin/delete/{no}")
+	public String deleteCategory(
+			@PathVariable("id") String blogId,
+			@PathVariable("no") String no) {
+		
+		return "redirect:/" + blogId + "/admin/category";
+	}
+	
 }
