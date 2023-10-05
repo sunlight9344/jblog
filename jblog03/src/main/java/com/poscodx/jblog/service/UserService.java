@@ -20,4 +20,8 @@ public class UserService {
 		return userRepository.getUserByIdAndPassword(id, password);
 	}
 
+	public UserVo getUser(String id) {
+		return userRepository.getUserByIdAndPassword(id);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.poscodx.jblog.vo;
 
+import javax.validation.constraints.NotEmpty;
+
 public class BlogVo {
 
 	private String title;

@@ -96,17 +96,25 @@ public class BlogController {
 			Model model) {
 		
 		BlogVo blogVo = blogService.findById(blogId);
-		
 		model.addAttribute("vo", blogVo);
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		return "blog/admin-basic";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 	public String adminBasic(
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId,
 			BlogVo blogVo, 
-			MultipartFile file) {
+			MultipartFile file,
+			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		blogVo.setBlogId(blogId);
 		String image = fileUploadService.restore(file);
@@ -118,10 +126,15 @@ public class BlogController {
 		return "redirect:/" + blogId;
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
 	public String adminCategory(
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId,
 			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
@@ -134,8 +147,16 @@ public class BlogController {
 		return "blog/admin-category";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
-	public String addCategory(@PathVariable("id") String blogId, CategoryVo categoryVo) {
+	public String addCategory(
+			@PathVariable("id") String blogId, 
+			CategoryVo categoryVo,
+			@AuthUser UserVo authUser,
+			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		categoryVo.setBlogId(blogId);
 		
@@ -144,11 +165,17 @@ public class BlogController {
 		return "redirect:/" + blogId + "/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/delete/{no}")
 	@Transactional
 	public String deleteCategory(
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId,
-			@PathVariable("no") int no) {
+			@PathVariable("no") int no,
+			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		postService.delete(no);
 		categoryService.remove(no);
@@ -156,18 +183,32 @@ public class BlogController {
 		return "redirect:/" + blogId + "/admin/category";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String write(
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId, 
 			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
+		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
 		model.addAttribute("blogId", blogId);
 		return "blog/admin-write";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
-	public String write(@PathVariable("id") String blogId, PostVo postVo) {
+	public String write(
+			@AuthUser UserVo authUser,
+			@PathVariable("id") String blogId, 
+			PostVo postVo,
+			Model model) {
+		
+		UserVo userVo = userService.getUser(authUser.getId());
+		model.addAttribute("userVo", userVo);
 		
 		postService.addPost(postVo);
 		
