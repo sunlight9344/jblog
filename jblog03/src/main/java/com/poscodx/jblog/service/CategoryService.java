@@ -17,7 +17,7 @@ public class CategoryService {
 	public List<CategoryVo> getAllContents(String blogId) {
 		return categoryRepository.selectAll(blogId);
 	}
-
+	
 	public void remove(int no) {
 		categoryRepository.delete(no);
 	}

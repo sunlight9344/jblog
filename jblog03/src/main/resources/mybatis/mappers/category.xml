@@ -5,12 +5,14 @@
 	
 	<select id="selectAll" resultType="categoryvo" parameterType="string">
 		<![CDATA[
-			select no, name, description, blog_id as blogId from category
+			select no, name, description, blog_id as blogId from category where blog_id=#{blogId}
 		]]>
 	</select>
 	
 	<delete id="deleteByNo" parameterType="int">
-		delete from category where no=#{no}
+		<![CDATA[
+			delete from category where no=#{no}
+		]]>
 	</delete>
 	
 	<insert id="insert" parameterType="categoryvo">

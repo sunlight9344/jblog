@@ -40,7 +40,6 @@
 			      			<td>
 			      				<input type="text" size="60" name="title">
 				      			<select name="categoryNo">
-				      				<option>미분류</option>
 				      				<c:forEach items="${list}" var="category">
 										<option value=${category.no }>${category.name }</option>
 									</c:forEach>

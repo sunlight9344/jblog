@@ -29,5 +29,9 @@ public class PostService {
 	public Integer count(int no) {
 		return postRepository.count(no);
 	}
+	
+	public void delete(int categoryNo) {
+		postRepository.delete(categoryNo);
+	}
 
 }

@@ -12,8 +12,8 @@ public class BlogService {
 	@Autowired
 	BlogRepository blogRepository;
 
-	public void add(String id) {
-		blogRepository.insert(id);
+	public void add(BlogVo blogVo) {
+		blogRepository.insert(blogVo);
 	}
 
 	public BlogVo findById(String blogId) {

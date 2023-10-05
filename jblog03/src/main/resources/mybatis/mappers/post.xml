@@ -9,6 +9,12 @@
 		]]>
 	</insert>
 	
+	<delete id="deleteByNo" parameterType="int">
+		<![CDATA[
+			delete from post where category_no=#{categoryNo}
+		]]>
+	</delete>
+	
 	<select id="findAll" resultType="postvo" parameterType="map">
 		<![CDATA[
 			select c.no, c.title, c.contents, c.category_no as categoryNo

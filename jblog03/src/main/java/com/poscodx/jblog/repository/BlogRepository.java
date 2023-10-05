@@ -12,8 +12,8 @@ public class BlogRepository {
 	@Autowired
 	SqlSession sqlSession;
 	
-	public void insert(String blog_id) {
-		sqlSession.insert("blog.insert", blog_id);
+	public void insert(BlogVo blogVo) {
+		sqlSession.insert("blog.insert", blogVo);
 	}
 
 	public BlogVo findById(String blogId) {

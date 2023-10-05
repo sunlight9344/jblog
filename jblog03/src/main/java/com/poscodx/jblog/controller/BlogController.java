@@ -8,19 +8,24 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.poscodx.jblog.security.Auth;
+import com.poscodx.jblog.security.AuthUser;
 import com.poscodx.jblog.service.BlogService;
 import com.poscodx.jblog.service.CategoryService;
 import com.poscodx.jblog.service.FileUploadService;
 import com.poscodx.jblog.service.PostService;
+import com.poscodx.jblog.service.UserService;
 import com.poscodx.jblog.vo.BlogVo;
 import com.poscodx.jblog.vo.CategoryVo;
 import com.poscodx.jblog.vo.PostVo;
+import com.poscodx.jblog.vo.UserVo;
 
 @Controller
 @RequestMapping(value = "/{id:^(?!assets).*}")
@@ -36,12 +41,16 @@ public class BlogController {
 	CategoryService categoryService;
 	
 	@Autowired
+	UserService userService;
+	
+	@Autowired
 	private FileUploadService fileUploadService;
+
 	
 	@RequestMapping({"", "/{categoryNo}", "/{categoryNo}/{postNo}"})
 	public String index(
 			@PathVariable("id") String blogId,
-			@PathVariable("categoryNo") Optional<Long> categoryNoTemp,
+			@PathVariable("categoryNo") Optional<Long> categoryNo,
 			@PathVariable("postNo") Optional<Long> postNo,
 			Model model) {
 		
@@ -50,13 +59,15 @@ public class BlogController {
 		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
 		
 		PostVo postVo = null;
-		long categoryNo = 2;
+		List<PostVo> postList = new ArrayList<>();
 		
-		if(categoryNoTemp.isPresent()) {
-			categoryNo = categoryNoTemp.get();
+		if(categoryNo.isPresent()) {
+			postList = postService.getAllContents(blogId, categoryNo.get());
+		}else {
+			if(!categoryList.isEmpty()) {
+				postList = postService.getAllContents(blogId, categoryList.get(0).getNo());
+			}
 		}
-		
-		List<PostVo> postList = postService.getAllContents(blogId, categoryNo);
 		
 		if(postNo.isPresent()) {
 			postVo = postService.getPostByNo(postNo.get());
@@ -77,12 +88,15 @@ public class BlogController {
 		return "blog/main";
 	}
 	
+	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 	public String adminBasic(
+			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId, 
 			Model model) {
 		
 		BlogVo blogVo = blogService.findById(blogId);
+		
 		model.addAttribute("vo", blogVo);
 		
 		return "blog/admin-basic";
@@ -120,23 +134,24 @@ public class BlogController {
 		return "blog/admin-category";
 	}
 	
-	@RequestMapping(value="/admin/delete/{no}")
-	public String deleteCategory(
-			@PathVariable("id") String blogId,
-			@PathVariable("no") int no) {
-		
-		categoryService.remove(no);
-//		System.out.println("------------>" + no);
-		
-		return "redirect:/" + blogId + "/admin/category";
-	}
-	
-	@RequestMapping(value="/admin/addCategory")
+	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 	public String addCategory(@PathVariable("id") String blogId, CategoryVo categoryVo) {
 		
 		categoryVo.setBlogId(blogId);
 		
 		categoryService.addCategory(categoryVo);
+		
+		return "redirect:/" + blogId + "/admin/category";
+	}
+	
+	@RequestMapping(value="/admin/delete/{no}")
+	@Transactional
+	public String deleteCategory(
+			@PathVariable("id") String blogId,
+			@PathVariable("no") int no) {
+		
+		postService.delete(no);
+		categoryService.remove(no);
 		
 		return "redirect:/" + blogId + "/admin/category";
 	}

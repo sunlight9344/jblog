@@ -6,6 +6,12 @@ public class CategoryVo {
 	private String name;
 	private String description;
 	private String blogId;
+	
+	public CategoryVo(String name, String description, String blogId) {
+		this.name = name;
+		this.description = description;
+		this.blogId = blogId;
+	}
 	public int getNo() {
 		return no;
 	}

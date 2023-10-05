@@ -30,7 +30,7 @@ a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; }
 .login-form input, .login-form label			{ display:block }
 .login-form label								{ text-align:left; color:#555; margin-bottom:2px; font-weight:bold; }
 .login-form input[type='text']					{ margin-bottom:10px; width:230px; padding:5px }
-
+.login-form input[type='password'] 				{ margin-bottom: 10px; width: 230px; padding: 5px; height: 25px; }
 .join-form										{ text-align:left; width:250px; padding:10px; border:1px solid #bbb; }
 .join-form label, .join-form fieldset legend	{ color:#555; margin-bottom:2px; font-weight:bold; }
 .join-form .block-label 						{ display:block }
@@ -42,8 +42,6 @@ a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; }
 .welcome-message span							{ font-size:1.2em; font-weight:bold; color:#777 }
 .welcome-message span:before					{ content: url(/jblog03/assets/images/bul1.gif);}
 .welcome-message span:after						{ content: url(/jblog03/assets/images/bul2.gif);}		
-
-
 
 div#container				{ width:920px; margin:0 auto }
 div#header					{ height:120px; background: #5394CC;  }

@@ -3,9 +3,9 @@
 
 <mapper namespace="blog">
 	
-	<insert id="insert" parameterType="string">
+	<insert id="insert" parameterType="blogvo">
 		<![CDATA[
-			insert blog values('기본블로그이름', '/assets/upload-images/202382557382.png', #{blogId})
+			insert blog values('기본블로그이름', '/assets/upload-images/default.png', #{blogId})
 		]]>
 	</insert>
 	

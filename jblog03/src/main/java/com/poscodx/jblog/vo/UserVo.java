@@ -1,9 +1,19 @@
 package com.poscodx.jblog.vo;
 
+import javax.validation.constraints.NotEmpty;
+
 public class UserVo {
+	
+	@NotEmpty
 	private String id;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotEmpty
 	private String password;
+	
+	
 	public String getId() {
 		return id;
 	}

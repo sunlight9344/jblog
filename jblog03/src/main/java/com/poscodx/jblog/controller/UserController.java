@@ -1,12 +1,21 @@
 package com.poscodx.jblog.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poscodx.jblog.service.BlogService;
+import com.poscodx.jblog.service.CategoryService;
 import com.poscodx.jblog.service.UserService;
+import com.poscodx.jblog.vo.BlogVo;
+import com.poscodx.jblog.vo.CategoryVo;
 import com.poscodx.jblog.vo.UserVo;
 
 @Controller
@@ -19,23 +28,44 @@ public class UserController {
 	@Autowired
 	private BlogService blogService;
 	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}
 
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join(@ModelAttribute UserVo userVo) {
 		return "user/join";
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(UserVo uservo) {
+	public String join(@ModelAttribute @Valid UserVo uservo, BindingResult result, Model model) {
+		
+		if(result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
+		
+		BlogVo blogVo = new BlogVo();
+		blogVo.setBlogId(uservo.getId());
 		
 		userService.join(uservo);
-		blogService.add(uservo.getId());
+		blogService.add(blogVo);
+		categoryService.addCategory(new CategoryVo("미분류", "미분류", uservo.getId()));
 		
+		return "redirect:/user/joinsuccess";
+	}
+	
+	@RequestMapping(value="/joinsuccess", method=RequestMethod.GET)
+	public String joinsuccess() {
 		return "user/joinsuccess";
 	}
 	
+	@RequestMapping("/checkUserIdExist/{blogId}")
+	public String checkUserIdExist(@PathVariable("blogId") String blogId) {
+		return "user/joinsuccess";
+	}
 }
