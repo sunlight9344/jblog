@@ -47,7 +47,7 @@ public class AdminInterceptor implements HandlerInterceptor {
 	            // 이제 blogId 변수에 주소에서 추출한 아이디 값이 저장되어 있음
 	            System.out.println(blogId);
 	            if(!blogId.equals(authUser.getId())) {
-	            	response.sendRedirect(request.getContextPath() + "/user/login");
+	            	response.sendRedirect(request.getContextPath() + "/" + blogId);
 	    			return false;
 	            }
 	        } 

@@ -136,6 +136,9 @@ public class BlogController {
 		UserVo userVo = userService.getUser(authUser.getId());
 		model.addAttribute("userVo", userVo);
 		
+		BlogVo blogVo = blogService.findById(blogId);
+		model.addAttribute("vo", blogVo);
+		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
 		model.addAttribute("blogId", blogId);
@@ -190,6 +193,9 @@ public class BlogController {
 		
 		UserVo userVo = userService.getUser(authUser.getId());
 		model.addAttribute("userVo", userVo);
+		
+		BlogVo blogVo = blogService.findById(blogId);
+		model.addAttribute("vo", blogVo);
 		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
 		model.addAttribute("list", list);
