@@ -1,5 +1,8 @@
 package com.poscodx.jblog.security;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,7 +35,22 @@ public class AdminInterceptor implements HandlerInterceptor {
 		}
 		
 		//3. AuthUser 과 UserVo blogId 비교
-		
+		 String requestURI = request.getRequestURI();
+	        String contextPath = request.getContextPath();
+	        String regex = "^" + Pattern.quote(contextPath) + "/([^/]+)/admin/basic";
+	        Pattern pattern = Pattern.compile(regex);
+	        Matcher matcher = pattern.matcher(requestURI);
+
+	        if (matcher.matches()) {
+	            // 주소에서 추출한 아이디 값을 가져옴
+	            String blogId = matcher.group(1);
+	            // 이제 blogId 변수에 주소에서 추출한 아이디 값이 저장되어 있음
+	            System.out.println(blogId);
+	            if(!blogId.equals(authUser.getId())) {
+	            	response.sendRedirect(request.getContextPath() + "/user/login");
+	    			return false;
+	            }
+	        } 
 		return true;
 	}
 }
