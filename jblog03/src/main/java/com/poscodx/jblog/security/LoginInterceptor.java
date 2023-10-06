@@ -19,10 +19,44 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		System.out.println("Login Interceptor called ...");
+		
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 		
 		UserVo authUser = userService.getUser(id, password);
+		
+		if(id.equals("") && password.equals("")) {
+			request.setAttribute("id", id);
+			request.setAttribute("errorId", "id를 입력하세요");
+			request.setAttribute("errorPassword", "password를 입력하세요");
+			request
+				.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+				.forward(request, response);
+		
+			return false;
+		}
+		
+		if(id.equals("")) {
+			request.setAttribute("id", id);
+			request.setAttribute("errorId", "id를 입력하세요");
+			request
+				.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+				.forward(request, response);
+		
+			return false;
+		}
+		
+		if(password.equals("")) {
+			request.setAttribute("id", id);
+			request.setAttribute("errorPassword", "password를 입력하세요");
+			request
+			.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+			.forward(request, response);
+			
+			return false;
+		}
 		
 		if(authUser == null) {
 			request.setAttribute("id", id);

@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +49,6 @@ public class BlogController {
 	
 	@Autowired
 	private FileUploadService fileUploadService;
-
 	
 	@RequestMapping({"", "/{categoryNo}", "/{categoryNo}/{postNo}"})
 	public String index(
@@ -88,7 +91,6 @@ public class BlogController {
 		return "blog/main";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.GET)
 	public String adminBasic(
 			@AuthUser UserVo authUser,
@@ -104,7 +106,6 @@ public class BlogController {
 		return "blog/admin-basic";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/basic", method=RequestMethod.POST)
 	public String adminBasic(
 			@AuthUser UserVo authUser,
@@ -126,7 +127,6 @@ public class BlogController {
 		return "redirect:/" + blogId;
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.GET)
 	public String adminCategory(
 			@AuthUser UserVo authUser,
@@ -147,7 +147,6 @@ public class BlogController {
 		return "blog/admin-category";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 	public String addCategory(
 			@PathVariable("id") String blogId, 
@@ -165,7 +164,6 @@ public class BlogController {
 		return "redirect:/" + blogId + "/admin/category";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/delete/{no}")
 	@Transactional
 	public String deleteCategory(
@@ -183,9 +181,9 @@ public class BlogController {
 		return "redirect:/" + blogId + "/admin/category";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String write(
+			@ModelAttribute PostVo postVo,
 			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId, 
 			Model model) {
@@ -199,12 +197,12 @@ public class BlogController {
 		return "blog/admin-write";
 	}
 	
-	@Auth
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String write(
+			@ModelAttribute @Valid PostVo postVo,
+			@ModelAttribute @PathVariable("id") String blogId,
+			BindingResult result,
 			@AuthUser UserVo authUser,
-			@PathVariable("id") String blogId, 
-			PostVo postVo,
 			Model model) {
 		
 		UserVo userVo = userService.getUser(authUser.getId());

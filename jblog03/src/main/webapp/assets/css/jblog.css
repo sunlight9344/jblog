@@ -10,8 +10,6 @@ a:visited 		{ color:#696969; text-decoration:none; font-weight:bold; }
 a:active 		{ color:#696969; text-decoration:none; font-weight:bold; }
 a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; } 
 
-
-
 .center-content	{ width:500px; margin:120px auto 50px auto}
 
 .center-content .logo							{ width:163px; height:104px; background:url(/jblog03/assets/images/logo.jpg) 0 0 no-repeat; margin:20px auto; text-indent:-100000px; font-size:0 }
@@ -30,7 +28,7 @@ a:hover 		{ color:#dc143c; text-decoration:none; font-weight:bold; }
 .login-form input, .login-form label			{ display:block }
 .login-form label								{ text-align:left; color:#555; margin-bottom:2px; font-weight:bold; }
 .login-form input[type='text']					{ margin-bottom:10px; width:230px; padding:5px }
-.login-form input[type='password'] 				{ margin-bottom: 10px; width: 230px; padding: 5px; height: 25px; }
+.login-form input[type='password'] 				{ margin-bottom:10px; width:230px; padding:5px; }
 .join-form										{ text-align:left; width:250px; padding:10px; border:1px solid #bbb; }
 .join-form label, .join-form fieldset legend	{ color:#555; margin-bottom:2px; font-weight:bold; }
 .join-form .block-label 						{ display:block }

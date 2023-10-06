@@ -15,6 +15,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		System.out.println("AuthInterceptor called ...");
+		
 		//1. handler 종류 확인
 		if(!(handler instanceof HandlerMethod)) {
 			// DefaultServletHandler process (static , /assets/** ...)

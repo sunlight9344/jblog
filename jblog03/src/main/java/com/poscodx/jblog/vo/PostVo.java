@@ -1,15 +1,11 @@
 package com.poscodx.jblog.vo;
 
-import javax.validation.constraints.NotEmpty;
-
 public class PostVo {
 	
 	private int no;
 	
-	@NotEmpty
 	private String title;
 	
-	@NotEmpty
 	private String contents;
 	
 	private int categoryNo;
