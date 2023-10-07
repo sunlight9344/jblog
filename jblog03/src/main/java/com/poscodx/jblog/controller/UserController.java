@@ -44,11 +44,24 @@ public class UserController {
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String join(
 			@ModelAttribute @Valid UserVo uservo, 
-			BindingResult result, 
+			BindingResult result,
+			String agreeProv,
 			Model model) {
+		
+		UserVo tempUser = userService.getUser(uservo.getId());
 		
 		if(result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
+			return "user/join";
+		}
+		
+		if(!(tempUser == null)) {
+			model.addAttribute("duplicateId", "중복된 ID 입니다.");
+			return "user/join";
+		}
+		
+		if(agreeProv == null) {
+			model.addAttribute("errorAgreeProv", "약관에 동의해주세요");
 			return "user/join";
 		}
 		

@@ -12,32 +12,6 @@
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 </head>
 
-<script>
-	function checkUserIdExist(){
-		var user_id = $("#blogId").val()
-		
-		if(blogId.length == 0 ){
-			alert('아이디를 입력해주세요')
-			return
-		}
-		$.ajax({
-			url : '${pageContext.request.contextPath }user/checkUserIdExist/' + blogId,
-			type : 'get',
-			dataType : 'text',
-			success : function(result){
-				if(result.trim()=='true'){
-					alert('사용할 수 있는 아이디입니다.')
-					$("#userIdExist").val('true')
-				}
-				else{
-					alert('사용할 수 없는 아이디입니다.')
-					$("#userIdExist").val('false')
-				}
-			}
-		})
-	}
-</script>
-
 <body>
 	<div class="center-content">
 		<h1 class="logo">JBlog</h1>
@@ -54,10 +28,10 @@
 
 			<label class="block-label" for="blog-id">아이디</label>
 			<form:input path="id" />
-			<input id="btn-checkemail" type="button" value="id 중복체크" onclick="checkUserIdExist()">
-			<input type="hidden" id="idcheck" name="idcheck" value=${idcheck }>
+			<input id="btn-checkemail" type="button" value="id 중복체크">
 			<p style="padding: 3px 0 5px 0; text-align: left; color: #f00">
 				<form:errors path="id" />
+				${duplicateId }
 			</p>
 			
 			<img id="img-checkemail" style="display: none;"
@@ -74,6 +48,9 @@
 				<input id="agree-prov" type="checkbox" name="agreeProv" value="y">
 				<label class="l-float">서비스 약관에 동의합니다.</label>
 			</fieldset>
+			<p style="padding:3px 0 5px 0; text-align: left; color: #f00">
+				${errorAgreeProv }
+			</p>
 
 			<input type="submit" value="가입하기">
 		</form:form>

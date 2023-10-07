@@ -24,6 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
+		String agreeProv = request.getParameter("agreeProv");
 		
 		UserVo authUser = userService.getUser(id, password);
 		
