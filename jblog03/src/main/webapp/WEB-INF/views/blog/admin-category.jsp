@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!doctype html>
 <html>
@@ -56,7 +54,12 @@
 			      	<table id="admin-cat-add">
 			      		<tr>
 			      			<td class="t">카테고리명</td>
-			      			<td><input type="text" name="name"></td>
+			      			<td>
+				      			<input type="text" name="name" id="categoryName">
+				      			<p style="text-align: left; color: #f00">
+									${errorName }
+								</p>
+							</td>
 			      		</tr>
 			      		<tr>
 			      			<td class="t">설명</td>

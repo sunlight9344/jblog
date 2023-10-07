@@ -42,7 +42,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/join", method=RequestMethod.POST)
-	public String join(@ModelAttribute @Valid UserVo uservo, BindingResult result, Model model) {
+	public String join(
+			@ModelAttribute @Valid UserVo uservo, 
+			BindingResult result, 
+			Model model) {
 		
 		if(result.hasErrors()) {
 			model.addAllAttributes(result.getModel());

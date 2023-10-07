@@ -1,16 +1,14 @@
 package com.poscodx.jblog.vo;
 
-import javax.validation.constraints.NotEmpty;
 
 public class CategoryVo {
 	
 	private int no;
 	
-	@NotEmpty
 	private String name;
 	
-	@NotEmpty
 	private String description;
+	
 	private String blogId;
 	
 	public CategoryVo(String name, String description, String blogId) {

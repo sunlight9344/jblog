@@ -52,8 +52,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 			request.setAttribute("id", id);
 			request.setAttribute("errorPassword", "password를 입력하세요");
 			request
-			.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
-			.forward(request, response);
+				.getRequestDispatcher("/WEB-INF/views/user/login.jsp")
+				.forward(request, response);
 			
 			return false;
 		}

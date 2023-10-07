@@ -39,6 +39,7 @@
 			      	<table class="admin-cat-write">
 			      		<tr>
 			      			<td class="t">제목</td>
+		      			
 			      			<td>
 			      				<input type="text" size="60" name="title">
 				      			<select name="categoryNo">
@@ -46,6 +47,9 @@
 										<option value=${category.no }>${category.name }</option>
 									</c:forEach>
 								</select>
+								<p style="text-align: left; color: #f00">
+									${errorTitle }
+								</p>
 				      		</td>
 			      		</tr>
 			      		<tr>

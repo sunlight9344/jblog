@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.poscodx.jblog.security.Auth;
 import com.poscodx.jblog.security.AuthUser;
 import com.poscodx.jblog.service.BlogService;
 import com.poscodx.jblog.service.CategoryService;
@@ -132,29 +131,29 @@ public class BlogController {
 			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId,
 			Model model) {
-		
+
 		UserVo userVo = userService.getUser(authUser.getId());
-		model.addAttribute("userVo", userVo);
-		
 		BlogVo blogVo = blogService.findById(blogId);
-		model.addAttribute("vo", blogVo);
-		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
-		model.addAttribute("list", list);
-		model.addAttribute("blogId", blogId);
 		List<Integer> countList = new ArrayList<>();
 		for(CategoryVo vo : list) {
 			countList.add(postService.count(vo.getNo()));
 		}
+		
+		model.addAttribute("vo", blogVo);
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("list", list);
+		model.addAttribute("blogId", blogId);
 		model.addAttribute("countList", countList);
+		
 		return "blog/admin-category";
 	}
 	
 	@RequestMapping(value="/admin/category", method=RequestMethod.POST)
 	public String addCategory(
-			@PathVariable("id") String blogId, 
-			CategoryVo categoryVo,
-			@AuthUser UserVo authUser,
+			@ModelAttribute @PathVariable("id") String blogId, 
+			@ModelAttribute CategoryVo categoryVo,
+			@ModelAttribute @AuthUser UserVo authUser,
 			Model model) {
 		
 		UserVo userVo = userService.getUser(authUser.getId());
@@ -186,28 +185,26 @@ public class BlogController {
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.GET)
 	public String write(
-			@ModelAttribute PostVo postVo,
 			@AuthUser UserVo authUser,
 			@PathVariable("id") String blogId, 
 			Model model) {
 		
 		UserVo userVo = userService.getUser(authUser.getId());
-		model.addAttribute("userVo", userVo);
-		
 		BlogVo blogVo = blogService.findById(blogId);
-		model.addAttribute("vo", blogVo);
-		
 		List<CategoryVo> list = categoryService.getAllContents(blogId);
+		
+		model.addAttribute("userVo", userVo);
+		model.addAttribute("vo", blogVo);
 		model.addAttribute("list", list);
 		model.addAttribute("blogId", blogId);
+		
 		return "blog/admin-write";
 	}
 	
 	@RequestMapping(value="/admin/write", method=RequestMethod.POST)
 	public String write(
-			@ModelAttribute @Valid PostVo postVo,
+			@ModelAttribute PostVo postVo,
 			@ModelAttribute @PathVariable("id") String blogId,
-			BindingResult result,
 			@AuthUser UserVo authUser,
 			Model model) {
 		

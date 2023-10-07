@@ -14,17 +14,15 @@
 		<div id="header">
 			<h1>${vo.title }</h1>
 			<ul>
-				<c:choose>
-					<c:when test="${empty authUser }">
-						<li><a href="${pageContext.request.contextPath}/user/login">로그인</a></li>
-					</c:when>
-					<c:when test="${not empty authUser and authUser.id eq blogId}">
-						<li><a href="${pageContext.request.contextPath}/${blogId }/admin/basic">블로그 관리</a></li>
-					</c:when>
-					<c:when test="${not empty authUser }">
-						<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
-					</c:when>
-				</c:choose>
+				<c:if test="${empty authUser }">
+					<li><a href="${pageContext.request.contextPath}/user/login">로그인</a></li>
+				</c:if>
+				<c:if test="${not empty authUser }">
+					<li><a href="${pageContext.request.contextPath}/user/logout">로그아웃</a></li>
+				</c:if>
+				<c:if test="${not empty authUser and authUser.id eq blogId}">
+					<li><a href="${pageContext.request.contextPath}/${blogId }/admin/basic">블로그 관리</a></li>
+				</c:if>
 			</ul>
 		</div>
 		<div id="wrapper">
