@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	private static final Log logger = LogFactory.getLog(GlobalExceptionHandler.class);
@@ -20,6 +19,10 @@ public class GlobalExceptionHandler {
 		StringWriter errors = new StringWriter();
 		e.printStackTrace(new PrintWriter(errors));
 		logger.error(errors.toString());
+		
+		if(e instanceof NullPointerException) {
+			return "error/404";
+		}
 		
 		//2. apple 페이지
 		model.addAttribute("errors", errors.toString());

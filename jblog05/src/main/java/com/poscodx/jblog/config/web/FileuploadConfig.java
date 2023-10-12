@@ -32,9 +32,9 @@ public class FileuploadConfig implements WebMvcConfigurer {
 		return multipartResolver;
 	}
 	
-	//
+	// 
 	// url-resoerce mapping
-	//
+	// 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry

@@ -58,6 +58,11 @@ public class BlogController {
 		
 		Map<String, Object> map = new HashMap<>();
 		BlogVo blogVo = blogService.findById(blogId);
+		
+		if(blogVo == null) {
+			throw new NullPointerException();
+		}
+		
 		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
 		
 		PostVo postVo = null;

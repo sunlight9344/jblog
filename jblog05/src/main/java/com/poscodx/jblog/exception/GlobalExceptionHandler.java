@@ -21,6 +21,10 @@ public class GlobalExceptionHandler {
 		e.printStackTrace(new PrintWriter(errors));
 		logger.error(errors.toString());
 		
+		if(e instanceof NullPointerException) {
+			return "error/404";
+		}
+		
 		//2. apple 페이지
 		model.addAttribute("errors", errors.toString());
 		return "error/exception";

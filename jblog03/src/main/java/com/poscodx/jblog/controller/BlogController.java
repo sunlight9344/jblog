@@ -6,18 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.poscodx.jblog.security.AuthUser;
 import com.poscodx.jblog.service.BlogService;
@@ -58,6 +56,11 @@ public class BlogController {
 		
 		Map<String, Object> map = new HashMap<>();
 		BlogVo blogVo = blogService.findById(blogId);
+		
+		if(blogVo == null) {
+			throw new NullPointerException();
+		}
+		
 		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
 		
 		PostVo postVo = null;
