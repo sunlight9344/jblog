@@ -60,7 +60,7 @@ public class BlogController {
 		BlogVo blogVo = blogService.findById(blogId);
 		
 		if(blogVo == null) {
-			throw new NullPointerException();
+			return "error/404";
 		}
 		
 		List<CategoryVo> categoryList = categoryService.getAllContents(blogId);
